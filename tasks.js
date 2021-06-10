@@ -85,7 +85,7 @@ function hello(name){
  * @returns {void}
  */
 function help(){
-  console.log('Options\n -hello\n -quit\n -exit')
+  console.log('Options\n -hello name\t says hello name!\n -quit\t\t\t to exit\n -exit\t\t\t to exit')
 }
 
 
