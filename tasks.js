@@ -70,6 +70,11 @@ function hello(){
   console.log('hello!')
 }
 
+/**
+ * Lists all the possible commands
+ *
+ * @returns {void}
+ */
 function help(){
   console.log('Options\n -hello\n -quit\n -exit')
 }
