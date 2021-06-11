@@ -39,8 +39,8 @@ function onDataReceived(text) {
   }
   else if(text === 'list\n')
     list();
-  else if(text.split(" ")[0].replace("\n", "") === 'add')
-    add(text.replace("\n", "").split(" ").slice(1));
+  else if(text.slice(0,3) === 'add')
+    add(text.replace(/\t/g,"").slice(3).trim());
   else if(text.slice(0,5) === 'hello'){
     hello(text.replace(/ /g,"").replace(/\t/g,"").slice(5).trim());
     // console.log(text);
@@ -110,6 +110,15 @@ function list(){
     console.log((i+1)+' - [ ] '+tasks[i]);
 }
 
+function add(task){
+  
+  if(task!="")
+    tasks.push(task);
+  
+  else{
+    console.log("error");
+  }
+}
 
 // The following line starts the application
 startApp("Dana")
