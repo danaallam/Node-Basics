@@ -39,6 +39,8 @@ function onDataReceived(text) {
     add(text.replace(/\t/g, "").slice(3).trim());
   else if (text.slice(0, 6) === "remove")
     remove(text.replace(/\t/g, "").slice(6).trim());
+  else if (text.slice(0, 4) === "edit")
+    edit(text.replace(/\t/g, "").slice(4).trim());
   else if (text.slice(0, 5) === "hello") {
     hello(text.replace(/ /g, "").replace(/\t/g, "").slice(5).trim());
     // console.log(text);
@@ -107,6 +109,20 @@ function add(task) {
   else {
     console.log("error");
   }
+}
+
+function edit(task) {
+  // console.log(task.split(" ")[0].length+1);
+  // console.log(parseInt(task.split(" ")[0]));
+  if (task == "" || parseInt(task.split(" ")[0])>tasks.length) 
+    console.log("ERROR!\ntype edit {x new task} to change the task {x} to {new text} or edit {new task} to change the last task to {new text}");
+  else if(Number.isInteger(parseInt(task.split(" ")[0]))){
+    // var c=parseInt(task.split(" ")[0]);
+    // console.log(c)
+    tasks[parseInt(task.split(" ")[0])-1]=task.substring(task.split(" ")[0].length).trim();
+  }
+  else
+    tasks[tasks.length-1]=task;
 }
 
 function remove(task) {
