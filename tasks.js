@@ -51,7 +51,16 @@ function onDataReceived(text) {
   }
 }
 
-const tasks = ["Go to the dr", "Sleep"];
+const tasks = [
+  {
+    name: "Go to the dr",
+    done: true,
+  },
+  {
+    name: "Sleep",
+    done: false,
+  },
+];
 
 /**
  * prints "unknown command"
@@ -85,7 +94,14 @@ function hello(name) {
  */
 function help() {
   console.log(
-    "Options\n -hello name\t\t says hello name!\n -quit\t\t\t to exit\n -exit\t\t\t to exit\n -list\t\t\t lists all tasks\n -add x\t\t\t adds x to the list\n -remove x\t\t removes list number x from the list\n -remove\t\t removes last task in the list"
+    "Options\n" +
+      "-hello name\t\t says hello name!\n -quit\t\t\t to exit\n" +
+      "-exit\t\t\t to exit\n -list\t\t\t lists all tasks\n" +
+      "-add x\t\t\t adds x to the list\n" +
+      "-remove x\t\t removes list number x from the list\n" +
+      "-remove\t\t removes last task in the list" +
+      "-edit new text\t\t\t change the last task to 'new text'" +
+      "-edit 1 new text\t\t\t change the task 1 to 'new text'"
   );
 }
 
@@ -101,12 +117,21 @@ function quit() {
 
 function list() {
   for (let i = 0; i < tasks.length; i++)
-    console.log(i + 1 + " - [ ] " + tasks[i]);
+    if (tasks[i].done == false) {
+      console.log(i + 1 + " - [ ] " + tasks[i].name);
+    } else {
+      console.log(i + 1 + " - [✓] " + tasks[i].name);
+    }
 }
 
 function add(task) {
-  if (task != "") tasks.push(task);
-  else {
+  // console.log(task);
+  if (task != "") {
+    tasks.push({
+      name: task,
+      done: false,
+    });
+  } else {
     console.log("error");
   }
 }
@@ -114,21 +139,26 @@ function add(task) {
 function edit(task) {
   // console.log(task.split(" ")[0].length+1);
   // console.log(parseInt(task.split(" ")[0]));
-  if (task == "" || parseInt(task.split(" ")[0])>tasks.length) 
-    console.log("ERROR!\ntype edit {x new task} to change the task {x} to {new text} or edit {new task} to change the last task to {new text}");
-  else if(Number.isInteger(parseInt(task.split(" ")[0]))){
+  if (task == "" || parseInt(task.split(" ")[0]) > tasks.length)
+    console.log(
+      "ERROR!\ntype edit {x new task} to change the task {x} to {new text} or edit {new task} to change the last task to {new text}"
+    );
+  else if (Number.isInteger(parseInt(task.split(" ")[0]))) {
     // var c=parseInt(task.split(" ")[0]);
     // console.log(c)
-    tasks[parseInt(task.split(" ")[0])-1]=task.substring(task.split(" ")[0].length).trim();
+    tasks[parseInt(task.split(" ")[0]) - 1].name = task.substring(task.split(" ")[0].length).trim();
+    tasks[parseInt(task.split(" ")[0]) - 1].done=false;
+  } 
+  else {
+    tasks[tasks.length - 1].name = task;
+    tasks[tasks.length - 1].done = false;
   }
-  else
-    tasks[tasks.length-1]=task;
 }
 
 function remove(task) {
   if (task == "") tasks.pop(task);
   else {
-    if (!Number.isInteger(parseInt(task))) {
+    if (task.trim().match(/^[0-9]+$/)==null){
       console.log("remove 'x'  x is not a NUMBER!!!");
     } else {
       tasks.splice(parseInt(task) - 1, 1);
