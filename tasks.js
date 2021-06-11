@@ -37,6 +37,8 @@ function onDataReceived(text) {
   if (text === 'quit\n' || text === 'exit\n') {
     quit();
   }
+  else if(text === 'list\n')
+    list();
   else if(text.split(" ")[0].replace("\n", "") === 'hello'){
     hello(text.replace("\n", "").split(" ").slice(1));
     // console.log(text);
@@ -49,6 +51,10 @@ function onDataReceived(text) {
   }
 }
 
+const tasks=[
+  "Go to the dr",
+  "Sleep"
+]
 
 /**
  * prints "unknown command"
@@ -98,6 +104,11 @@ function help(){
 function quit(){
   console.log('Quitting now, goodbye!')
   process.exit();
+}
+
+function list(){
+  for(let i=0; i<tasks.length; i++)
+    console.log((i+1)+' - [ ] '+tasks[i]);
 }
 
 // The following line starts the application
