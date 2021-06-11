@@ -105,7 +105,9 @@ function help() {
       "-remove x\t\t removes list number x from the list\n" +
       "-remove\t\t removes last task in the list" +
       "-edit new text\t\t\t change the last task to 'new text'" +
-      "-edit 1 new text\t\t\t change the task 1 to 'new text'"
+      "-edit x new text\t\t\t change the task x to 'new text'"+
+      "-check x\t\t\t change task x to 'done'"+
+      "-uncheck x\t\t\t change task x to 'undone'"
   );
 }
 
