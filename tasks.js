@@ -110,5 +110,6 @@ function list(){
     console.log((i+1)+' - [ ] '+tasks[i]);
 }
 
+
 // The following line starts the application
 startApp("Dana")
