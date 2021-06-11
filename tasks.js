@@ -41,6 +41,10 @@ function onDataReceived(text) {
     remove(text.replace(/\t/g, "").slice(6).trim());
   else if (text.slice(0, 4) === "edit")
     edit(text.replace(/\t/g, "").slice(4).trim());
+  else if (text.slice(0, 5) === "check")
+    check(text.replace(/\t/g, "").slice(5).trim());
+  else if (text.slice(0, 7) === "uncheck")
+    uncheck(text.replace(/\t/g, "").slice(7).trim());
   else if (text.slice(0, 5) === "hello") {
     hello(text.replace(/ /g, "").replace(/\t/g, "").slice(5).trim());
     // console.log(text);
@@ -146,10 +150,11 @@ function edit(task) {
   else if (Number.isInteger(parseInt(task.split(" ")[0]))) {
     // var c=parseInt(task.split(" ")[0]);
     // console.log(c)
-    tasks[parseInt(task.split(" ")[0]) - 1].name = task.substring(task.split(" ")[0].length).trim();
-    tasks[parseInt(task.split(" ")[0]) - 1].done=false;
-  } 
-  else {
+    tasks[parseInt(task.split(" ")[0]) - 1].name = task
+      .substring(task.split(" ")[0].length)
+      .trim();
+    tasks[parseInt(task.split(" ")[0]) - 1].done = false;
+  } else {
     tasks[tasks.length - 1].name = task;
     tasks[tasks.length - 1].done = false;
   }
@@ -158,11 +163,35 @@ function edit(task) {
 function remove(task) {
   if (task == "") tasks.pop(task);
   else {
-    if (task.trim().match(/^[0-9]+$/)==null){
+    if (task.trim().match(/^[0-9]+$/) == null) {
       console.log("remove 'x'  x is not a NUMBER!!!");
     } else {
       tasks.splice(parseInt(task) - 1, 1);
     }
+  }
+}
+
+function check(task) {
+  // console.log(tasks[parseInt(task.split(" ")[0]) - 1]);
+  if (task == "") console.log("ERROR! type check x to change task x to 'done'");
+  else if (task.split(" ")[0] > tasks.length)
+    console.log("task " + task.split(" ")[0] + " doesn't exist");
+  else if (task.trim().match(/^[0-9]+$/) == null) {
+    console.log("check 'x'  x is not a NUMBER!!!");
+  } else {
+    tasks[parseInt(task.split(" ")[0]) - 1].done = true;
+  }
+}
+
+function uncheck(task) {
+  // console.log(tasks[parseInt(task.split(" ")[0]) - 1]);
+  if (task == "") console.log("ERROR! type check x to change task x to 'done'");
+  else if (task.split(" ")[0] > tasks.length)
+    console.log("task " + task.split(" ")[0] + " doesn't exist");
+  else if (task.trim().match(/^[0-9]+$/) == null) {
+    console.log("check 'x'  x is not a NUMBER!!!");
+  } else {
+    tasks[parseInt(task.split(" ")[0]) - 1].done = false;
   }
 }
 
