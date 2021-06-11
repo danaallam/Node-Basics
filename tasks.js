@@ -83,7 +83,7 @@ function hello(name) {
  */
 function help() {
   console.log(
-    "Options\n -hello name\t says hello name!\n -quit\t\t\t to exit\n -exit\t\t\t to exit"
+    "Options\n -hello name\t\t says hello name!\n -quit\t\t\t to exit\n -exit\t\t\t to exit\n -list\t\t\t lists all tasks\n -add x\t\t\t adds x to the list\n -remove x\t\t removes list number x from the list\n -remove\t\t removes last task in the list"
   );
 }
 
