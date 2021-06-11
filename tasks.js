@@ -1,3 +1,7 @@
+let file = process.argv[2];
+if (!file || file != "blah.json") {
+  file = './database.json';
+}
 /**
  * Starts the application
  * This is the function that is run when the app starts
@@ -19,26 +23,24 @@ function startApp(name) {
 function getData() {
   try {
     const fs = require("fs");
-    let data = fs.readFileSync("./database.json");
+    let data = fs.readFileSync(file);
     let tasks = JSON.parse(data);
-    console.log(tasks);
+    // console.log(tasks);
     return tasks;
   } catch (err) {
     console.log(err);
   }
 }
 
-tasks=getData();
+tasks = getData();
 
 function storeData() {
   const fs = require("fs");
   let data = JSON.stringify(tasks);
-  fs.writeFileSync('database.json', data, (err) => {
+  fs.writeFileSync(file, data, (err) => {
     if (err) throw err;
   });
 }
-
-
 
 /**
  * Decides what to do depending on the data that was received
