@@ -39,8 +39,10 @@ function onDataReceived(text) {
   }
   else if(text === 'list\n')
     list();
-  else if(text.split(" ")[0].replace("\n", "") === 'hello'){
-    hello(text.replace("\n", "").split(" ").slice(1));
+  else if(text.split(" ")[0].replace("\n", "") === 'add')
+    add(text.replace("\n", "").split(" ").slice(1));
+  else if(text.slice(0,5) === 'hello'){
+    hello(text.replace(/ /g,"").replace(/\t/g,"").slice(5).trim());
     // console.log(text);
   }
   else if(text === 'help\n'){
@@ -74,13 +76,10 @@ function unknownCommand(c){
  * @returns {void}
  */
 function hello(name){
-  // console.log(name)
   var newname='';
-  if(name!="")
-    newname=" ";
-
-  for(let i=0;i<name.length;i++){
-      newname+=name[i];
+  if(name!=""){
+   newname=' ';
+  newname+=name;
   }
   console.log("hello"+newname+'!')
 }
