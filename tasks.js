@@ -1,6 +1,6 @@
 let file = process.argv[2];
 if (!file || file != "blah.json") {
-  file = './database.json';
+  file = "./database.json";
 }
 /**
  * Starts the application
@@ -148,6 +148,11 @@ function quit() {
   process.exit();
 }
 
+/**
+ * Lists all tasks
+ *
+ * @returns {void}
+ */
 function list() {
   for (let i = 0; i < tasks.length; i++)
     if (tasks[i].done == false) {
@@ -157,9 +162,15 @@ function list() {
     }
 }
 
+/**
+ * Adds a task
+ *
+ * @returns {void}
+ */
 function add(task) {
   // console.log(task);
   if (task != "") {
+    console.log(task + " is added to the list");
     tasks.push({
       name: task,
       done: false,
@@ -169,6 +180,11 @@ function add(task) {
   }
 }
 
+/**
+ * Edits a task
+ *
+ * @returns {void}
+ */
 function edit(task) {
   // console.log(task.split(" ")[0].length+1);
   // console.log(parseInt(task.split(" ")[0]));
@@ -183,23 +199,48 @@ function edit(task) {
       .substring(task.split(" ")[0].length)
       .trim();
     tasks[parseInt(task.split(" ")[0]) - 1].done = false;
+    console.log(
+      "task " +
+        parseInt(task.split(" ")[0]) +
+        " changed to '" +
+        task.substring(task.split(" ")[0].length).trim() +
+        "'"
+    );
   } else {
     tasks[tasks.length - 1].name = task;
     tasks[tasks.length - 1].done = false;
+    console.log("task " + tasks.length + " changed to '" + task + "'");
   }
 }
 
+/**
+ * Removes a task
+ *
+ * @returns {void}
+ */
 function remove(task) {
-  if (task == "") tasks.pop(task);
-  else {
-    if (task.trim().match(/^[0-9]+$/) == null) {
+  if (task == "") {
+    console.log("task " + tasks.length + " is removed from the list");
+    tasks.pop(task);
+  } else {
+    if (task.trim().match(/^[0-9]+$/) == null)
       console.log("remove 'x'  x is not a NUMBER!!!");
-    } else {
+    else if (task.split(" ")[0] > tasks.length)
+      console.log("task " + task.split(" ")[0] + " doesn't exist");
+    else {
       tasks.splice(parseInt(task) - 1, 1);
+      console.log(
+        "task " + parseInt(task.split(" ")[0]) + " is removed from the list"
+      );
     }
   }
 }
 
+/**
+ * Checks a task
+ *
+ * @returns {void}
+ */
 function check(task) {
   // console.log(tasks[parseInt(task.split(" ")[0]) - 1]);
   if (task == "") console.log("ERROR! type check x to change task x to 'done'");
@@ -208,10 +249,24 @@ function check(task) {
   else if (task.trim().match(/^[0-9]+$/) == null) {
     console.log("check 'x'  x is not a NUMBER!!!");
   } else {
-    tasks[parseInt(task.split(" ")[0]) - 1].done = true;
+    if (tasks[parseInt(task.split(" ")[0]) - 1].done == false) {
+      console.log(
+        "task " + parseInt(task.split(" ")[0]) + " is marked as checked"
+      );
+      tasks[parseInt(task.split(" ")[0]) - 1].done = true;
+    } else {
+      console.log(
+        "task " + parseInt(task.split(" ")[0]) + " is already checked"
+      );
+    }
   }
 }
 
+/**
+ * Unchecks a task
+ *
+ * @returns {void}
+ */
 function uncheck(task) {
   // console.log(tasks[parseInt(task.split(" ")[0]) - 1]);
   if (task == "") console.log("ERROR! type check x to change task x to 'done'");
@@ -220,7 +275,16 @@ function uncheck(task) {
   else if (task.trim().match(/^[0-9]+$/) == null) {
     console.log("check 'x'  x is not a NUMBER!!!");
   } else {
-    tasks[parseInt(task.split(" ")[0]) - 1].done = false;
+    if (tasks[parseInt(task.split(" ")[0]) - 1].done == true) {
+      console.log(
+        "task " + parseInt(task.split(" ")[0]) + " is marked as unchecked"
+      );
+      tasks[parseInt(task.split(" ")[0]) - 1].done = false;
+    } else {
+      console.log(
+        "task " + parseInt(task.split(" ")[0]) + " is already unchecked"
+      );
+    }
   }
 }
 
