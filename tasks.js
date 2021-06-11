@@ -16,6 +16,30 @@ function startApp(name) {
   console.log("--------------------");
 }
 
+function getData() {
+  try {
+    const fs = require("fs");
+    let data = fs.readFileSync("./database.json");
+    let tasks = JSON.parse(data);
+    console.log(tasks);
+    return tasks;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+tasks=getData();
+
+function storeData() {
+  const fs = require("fs");
+  let data = JSON.stringify(tasks);
+  fs.writeFileSync('database.json', data, (err) => {
+    if (err) throw err;
+  });
+}
+
+
+
 /**
  * Decides what to do depending on the data that was received
  * This function receives the input sent by the user.
@@ -55,16 +79,16 @@ function onDataReceived(text) {
   }
 }
 
-const tasks = [
-  {
-    name: "Go to the dr",
-    done: true,
-  },
-  {
-    name: "Sleep",
-    done: false,
-  },
-];
+// const tasks = [
+//   {
+//     name: "Go to the dr",
+//     done: true,
+//   },
+//   {
+//     name: "Sleep",
+//     done: false,
+//   },
+// ];
 
 /**
  * prints "unknown command"
@@ -105,8 +129,8 @@ function help() {
       "-remove x\t\t removes list number x from the list\n" +
       "-remove\t\t removes last task in the list" +
       "-edit new text\t\t\t change the last task to 'new text'" +
-      "-edit x new text\t\t\t change the task x to 'new text'"+
-      "-check x\t\t\t change task x to 'done'"+
+      "-edit x new text\t\t\t change the task x to 'new text'" +
+      "-check x\t\t\t change task x to 'done'" +
       "-uncheck x\t\t\t change task x to 'undone'"
   );
 }
@@ -117,6 +141,7 @@ function help() {
  * @returns {void}
  */
 function quit() {
+  storeData();
   console.log("Quitting now, goodbye!");
   process.exit();
 }
